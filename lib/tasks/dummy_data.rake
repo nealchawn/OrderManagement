@@ -1,5 +1,5 @@
 namespace :dummy_data do
-  desc "create dummy data"
+  desc "create dummy data for products"
   task :create => :environment do
     prices = [9.99, 19.99, 24.99, 49.99]
     names = ["Mixer", "Drum Machine", "Keyboard"]
