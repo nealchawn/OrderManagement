@@ -1,5 +1,6 @@
 class Product < ApplicationRecord
-	has_many :orders
+	has_many :products_per_orders
+	has_many :products, :through => :products_per_order
 
 	def order_count
 		self.orders.count

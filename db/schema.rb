@@ -10,33 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_19_210853) do
+ActiveRecord::Schema.define(version: 2018_06_20_200617) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "orders", force: :cascade do |t|
-    t.integer "quantity"
     t.text "address"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.date "shipped_on"
-    t.integer "order_product_id"
-  end
-
-  create_table "orders_products", force: :cascade do |t|
-    t.integer "order_id"
-    t.integer "product_id"
-    t.decimal "unit_price", precision: 5, scale: 2
-    t.integer "quantity"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.decimal "total_price", precision: 5, scale: 2
   end
 
   create_table "products", force: :cascade do |t|
     t.string "name"
     t.text "description"
     t.decimal "price", precision: 5, scale: 2
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "products_per_orders", force: :cascade do |t|
+    t.integer "order_id"
+    t.integer "product_id"
+    t.decimal "unit_price", precision: 5, scale: 2
+    t.integer "quantity"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
