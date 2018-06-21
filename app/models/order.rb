@@ -4,6 +4,7 @@ class Order < ApplicationRecord
 
 	items=[]
 	address=""
+
 	def total
 		if(self.total_price == nil)
 			total=0
@@ -19,22 +20,34 @@ class Order < ApplicationRecord
 	    end
 	end
 
-	def self.order(address, items)
-		@order = Order.create(address: address)
-		items.each_with_index do |p , i|
-			if (i == 0)
-			else
-				#puts "index #{i} value #{p}"
-				@product = Product.find(i)
-				@newOrder = ProductsPerOrder.create(order_id: @order.id, product_id: @product.id, unit_price: @product.price, quantity: p)
-			end
+	def add_items(items)
+		items.each do |order_item|			
+			#puts "index #{i} value #{p}"
+			product = order_item[:product]
+			newOrder = ProductsPerOrder.create(order_id: order.id, product_id: product.id, unit_price: product.price, quantity: order_item[:quantity])
 		end
-		totalprice = @order.total
-		Order.update(@newOrder.order_id,total_price: totalprice)
+		self.total_price = nil;
+		totalprice = order.total
+		Order.update(newOrder.order_id,total_price: totalprice)
 	end
 
-	def self.top_sold_product
-		#Order.select("product_id, count(product_id)").group("product_id, id").first
+
+	# address: string, items: hash
+	# items = [
+	# 	{product: Product, quantity: integer},
+	# 	{product: Product, quantity: integer}
+	# ]
+
+	def self.place_order(address, items)
+		newOrder = " "
+		order = Order.create(address: address)
+		items.each do |order_item|			
+			#puts "index #{i} value #{p}"
+			product = order_item[:product]
+			newOrder = ProductsPerOrder.create(order_id: order.id, product_id: product.id, unit_price: product.price, quantity: order_item[:quantity])
+		end
+		totalprice = order.total
+		Order.update(newOrder.order_id,total_price: totalprice)
 	end
 
 end

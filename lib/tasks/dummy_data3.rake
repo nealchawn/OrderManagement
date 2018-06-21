@@ -9,7 +9,7 @@ namespace :product_overview do
     products.each do |p|
       totalsale = p.total_product_sales.round(2)
       totalsold = p.total_product_sold
-      totalorders = p.orders.count
+      totalorders = p.products_per_order.count
       puts " "
       puts"############################################"
       puts "  product: #{p.name}"
