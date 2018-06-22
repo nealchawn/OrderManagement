@@ -1,0 +1,45 @@
+<style>
+span.tab{
+    padding: 0 80px; /* Or desired space*/
+}
+</style>
+      <br>############################################
+      <span class="tab"></span>  <br>  Product OverView"
+      <br>############################################
+<%   @products.each do |p| 
+      totalsale = p.total_product_sales
+      totalsold = p.total_product_sold
+      totalorders = p.products_per_order.count
+      
+       if (p.id == @top_product_sale) %>
+        <br><font color="red">
+        <br>############################################
+        <span class="tab"></span>   <br>  This Product Made the most in Sales
+
+      <% elsif (p.id == @top_sold_product) %>
+        <br><font color="goldenrod">
+        <br>############################################
+        <span class="tab">   </span><br>  This Product Sold the Most
+
+      <% elsif (p.id == @top_sold_product && p.id == @top_product_sale) %>
+        <br><font color="blue">
+        <br>############################################
+        <span class="tab"></span><br>  This Product Sold the Most And Made the Most in Sales!!!
+
+      <% else %>
+        <br>
+        <br>############################################
+      <% end%>
+
+        <br>  product: <%=p.name%>
+        <span class="tab"></span>   <br>     sold: <%=totalsold%>
+        <span class="tab"></span>   <br>    total orders: <%=totalorders%>
+        <span class="tab"></span>   <br>     total sales: <%=totalsale%>
+        <br>############################################
+        <br>      
+    
+      <% if ((p.id == @top_product_sale) || (p.id == @top_sold_product)) %>
+        </font>
+      <% end %>
+
+     <% end %>

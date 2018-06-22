@@ -1,0 +1,70 @@
+<style>
+span.tab{
+    padding: 0 80px; /* Or desired space*/
+}
+
+</style>
+<center>
+<table style="width:85%">
+  <tr><th>############################################</th></tr>
+  <tr><th><center>Order OverView" </center></th></tr>
+  <tr><th>############################################</th></tr>
+</table>
+<%   @orders.each do |o| 
+      order_id = o.id
+      order_total = o.total_price
+      shipped_on = o.shipped_on
+      address = o.address
+
+       if (o.id == @top_order) %>
+       <table style="width:85%">
+        <br><font color="goldenrod">
+        <tr><th>############################################</th></tr>
+        <tr><th><center> This Order Made the most in Sales</center></th></tr>
+      <% else %>
+        <br>
+        <table style="width:85%">
+        <tr><th>############################################</th></tr>
+      <% end%>
+
+      <tr><th><center>Order <%= order_id %></center></th></tr>
+      <tr><th><center>Address <%= address %></center></th></tr>
+      <tr><th><center>Shipped On <%= shipped_on %></center></th></tr>
+      </table>
+      <table>
+      <tr>
+        <th>Item</th>
+        <th>Unit Price</th>
+        <th>Quantity</th>
+        <th>Total</th>
+      </tr>
+
+<%      o.products_per_orders.each do |ppo|
+        product_id = ppo.product_id
+        product_name = ppo.product.name
+        product_price = ppo.unit_price
+        product_quantity = ppo.quantity
+        product_total = (product_price * product_quantity)
+%>
+        <tr>
+          <td>Product: <%= link_to product_name, product_path(product_id)%></td>
+          <td><%=product_price%></td>
+          <td><%=product_quantity%></td>
+          <td><%=product_total%></td>
+        </tr>
+        <% end %>
+
+        <tr>
+          <td>Total:</td>
+          <td></td>
+          <td></td>
+          <td><%=order_total%></td>
+        </tr>
+
+      <% if (o.id == @top_order) %>
+        </font>
+      <% end %>
+    </table>
+     <% end %>
+   </table>
+   </center>

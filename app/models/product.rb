@@ -12,7 +12,7 @@ class Product < ApplicationRecord
 	    list.each do |o|
 	      bigtotal += (o.unit_price*o.quantity)
 	    end
-	    return bigtotal
+	    return bigtotal.round(2)
 	end
 
 	def total_product_sold
@@ -32,7 +32,7 @@ class Product < ApplicationRecord
 	end
 
 	def self.top_sold_product
-		ProductsPerOrder.select("product_id, SUM(quantity) as total_quantity").group("product_id")[0].total_quantity
+		ProductsPerOrder.select("product_id, SUM(quantity) as total_quantity").group("product_id").order("total_quantity DESC")[0]
 	end
 
 	def total_product_sales_for_date_range(d,d2)
