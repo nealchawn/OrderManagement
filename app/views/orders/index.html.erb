@@ -1,3 +1,5 @@
+<p id="notice"><%= notice %></p>
+
 <style>
 span.tab{
     padding: 0 80px; /* Or desired space*/
@@ -40,7 +42,7 @@ span.tab{
           <td>Product: <%= link_to ppo.product.name, product_path(ppo.product_id)%></td>
           <td><%=ppo.unit_price%></td>
           <td><%=ppo.quantity%></td>
-          <td><%=(ppo.unit_price * papo.quantity)%></td>
+          <td><%=(ppo.unit_price * ppo.quantity)%></td>
         </tr>
         <% end %>
 
@@ -65,3 +67,5 @@ span.tab{
      <% end %>
    </table>
    </center>
+
+<%= link_to 'New Order', new_order_path %>

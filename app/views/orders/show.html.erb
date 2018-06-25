@@ -1,0 +1,42 @@
+<p id="notice"><%= notice %></p>
+<center><p>
+  <strong> Order <%= @order.id %></strong>
+
+</p></center>
+<p>
+  <strong>Address:</strong>
+  <%= @order.address %>
+</p>
+
+<p>
+  <strong>Shipped on:</strong>
+  <%= @order.shipped_on %>
+</p>
+<table>
+      <tr>
+        <th>Item</th>
+        <th>Unit Price</th>
+        <th>Quantity</th>
+        <th>Total</th>
+      </tr>
+
+<%      @order.products_per_orders.each do |ppo|
+%>
+        <tr>
+          <td>Product: <%= link_to ppo.product.name, product_path(ppo.product_id)%></td>
+          <td><%=ppo.unit_price%></td>
+          <td><%=ppo.quantity%></td>
+          <td><%=(ppo.unit_price * ppo.quantity)%></td>
+        </tr>
+        <% end %>
+
+        <tr>
+          <td>Total:</td>
+          <td></td>
+          <td></td>
+          <td><%=@order.total_price%></td>
+        </tr>
+    </table>
+
+<%= link_to 'Edit', edit_order_path(@order) %> |
+<%= link_to 'Back', orders_path %>

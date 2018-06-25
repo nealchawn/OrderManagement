@@ -43,7 +43,8 @@ class Order < ApplicationRecord
 	def self.place_order(address, items)
 		newOrder = " "
 		order = Order.create(address: address)
-		items.each do |order_item|			
+		items = eval(items)
+		items.to_a.each do |order_item|			
 			#puts "index #{i} value #{p}"
 			product = order_item[:product]
 			newOrder = ProductsPerOrder.create(order_id: order.id, product_id: product.id, unit_price: product.price, quantity: order_item[:quantity])

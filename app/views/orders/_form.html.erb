@@ -1,0 +1,50 @@
+<%= form_with(model: order, local: true) do |form| %>
+  <% if order.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(order.errors.count, "error") %> prohibited this order from being saved:</h2>
+
+      <ul>
+      <% order.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :address %>
+    <%= form.text_area :address %>
+  </div>
+
+  <div class="field">
+    <%= form.label :shipped_on %>
+    <%= form.date_select :shipped_on %>
+  </div>
+
+  <%      @order.products_per_orders.each do |ppo|
+%>
+        <tr>
+          <td>Product: <%= link_to ppo.product.name, product_path(ppo.product_id)%></td>
+          <td><%=ppo.unit_price%></td>
+          <td><%=ppo.quantity%></td>
+          <td><%=(ppo.unit_price * ppo.quantity)%></td>
+        </tr>
+        <% end %>
+<select id= item>
+<%= options_from_collection_for_select(Product.all, :id, :name) %>
+</select>
+<input name = order[item] id="items" value="">
+<input name = order[quan] id="quan" value="">
+ <div id="items1" name=order[item]  >
+ </div>
+  <div class="field">
+    <%= form.label :total_price %>
+    <%= form.text_field :total_price %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
+
+  <button onclick="additem()">Add Item</button>
