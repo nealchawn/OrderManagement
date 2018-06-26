@@ -30,11 +30,12 @@ class OrdersController < ApplicationController
   # POST /orders.json
   def create
     params[:order][:item].insert(0,'[')
-    params[:order][:item] = params[:order][:item]+']'
-    @order = Order.place_order(params[:order][:address], params[:order][:item])
+    items = params[:order][:item]+']'
+    items = Order.makeorder(eval(items))
+
 
     respond_to do |format|
-      if @order.save
+      if Order.place_order(params[:order][:address], items)
         format.html { redirect_to @order, notice: 'Order was successfully created.' }
         format.json { render :show, status: :created, location: @order }
       else
@@ -47,6 +48,12 @@ class OrdersController < ApplicationController
   # PATCH/PUT /orders/1
   # PATCH/PUT /orders/1.json
   def update
+    params[:order][:item].insert(0,'[')
+    items = params[:order][:item]+']'
+    items = Order.makeorder(eval(items))
+    @order.add_items(items)
+    params[:order].delete("item")
+    params[:order].delete("quan")
     respond_to do |format|
       if @order.update(order_params)
         format.html { redirect_to @order, notice: 'Order was successfully updated.' }
@@ -68,6 +75,20 @@ class OrdersController < ApplicationController
     end
   end
 
+    def destroyitem
+    #@order.products_per_orders.find(params[:id).destroy
+    ProductsPerOrder.find(params[:ppoid]).destroy
+    order = Order.find(params[:order_id])
+    order.total_price = nil;
+    totalprice = order.total
+    order.update(total_price: totalprice)
+
+    respond_to do |format|
+      format.html { redirect_to orders_path, notice: 'Order Item was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_order
@@ -76,6 +97,6 @@ class OrdersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def order_params
-      params.require(:order).permit(:address, :item)
+      params.require(:order).permit(:address, :item, :shipped_on)
     end
 end

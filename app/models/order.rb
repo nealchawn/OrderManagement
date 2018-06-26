@@ -24,15 +24,22 @@ class Order < ApplicationRecord
 		items.each do |order_item|			
 			#puts "index #{i} value #{p}"
 			product = order_item[:product]
-			newOrder = ProductsPerOrder.create(order_id: order.id, product_id: product.id, unit_price: product.price, quantity: order_item[:quantity])
+            self.products_per_orders.create(product_id: product.id, unit_price: product.price, quantity: order_item[:quantity])
 		end
 		self.total_price = nil;
-		totalprice = order.total
-		Order.update(newOrder.order_id,total_price: totalprice)
+		totalprice = self.total
+		self.update(total_price: totalprice)
 	end
 
 	def self.top_order
 		Order.order("total_price DESC")[0]
+	end
+
+	def self.makeorder(items)
+		items.each do |item|
+		item[:product] = Product.find(item[:product])
+		end
+		return items
 	end
 	# address: string, items: hash
 	# items = [
@@ -43,7 +50,6 @@ class Order < ApplicationRecord
 	def self.place_order(address, items)
 		newOrder = " "
 		order = Order.create(address: address)
-		items = eval(items)
 		items.to_a.each do |order_item|			
 			#puts "index #{i} value #{p}"
 			product = order_item[:product]
