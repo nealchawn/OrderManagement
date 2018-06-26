@@ -29,13 +29,17 @@ class OrdersController < ApplicationController
   # POST /orders
   # POST /orders.json
   def create
-    params[:order][:item].insert(0,'[')
-    items = params[:order][:item]+']'
-    items = Order.makeorder(eval(items))
-
+    #params[:order][:item].insert(0,'[')
+    #items = params[:order][:item]+']'
+    #items = Order.makeorder(eval(items))
+    @order = Order.new(order_params)
 
     respond_to do |format|
-      if Order.place_order(params[:order][:address], items)
+      #if Order.place_order(params[:order][:address], items)
+      # just shipping address
+
+
+      if @order.save
         format.html { redirect_to @order, notice: 'Order was successfully created.' }
         format.json { render :show, status: :created, location: @order }
       else
@@ -48,12 +52,14 @@ class OrdersController < ApplicationController
   # PATCH/PUT /orders/1
   # PATCH/PUT /orders/1.json
   def update
-    params[:order][:item].insert(0,'[')
-    items = params[:order][:item]+']'
-    items = Order.makeorder(eval(items))
-    @order.add_items(items)
-    params[:order].delete("item")
-    params[:order].delete("quan")
+    #params[:order][:item].insert(0,'[')
+    #items = params[:order][:item]+']'
+    #items = Order.makeorder(eval(items))
+    #@order.add_items(items)
+    #params[:order].delete("item")
+    #params[:order].delete("quan")
+
+
     respond_to do |format|
       if @order.update(order_params)
         format.html { redirect_to @order, notice: 'Order was successfully updated.' }

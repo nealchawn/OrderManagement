@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 <center><p>
-  <strong> Order <%= @order.id %></strong>
+  <strong> Order <%= params[:id] %></strong>
 
 </p></center>
 <p>
@@ -12,31 +12,14 @@
   <strong>Shipped on:</strong>
   <%= @order.shipped_on %>
 </p>
-<table>
-      <tr>
-        <th>Item</th>
-        <th>Unit Price</th>
-        <th>Quantity</th>
-        <th>Total</th>
-      </tr>
-
-<%      @order.products_per_orders.each do |ppo|
-%>
-        <tr>
-          <td>Product: <%= link_to ppo.product.name, product_path(ppo.product_id)%></td>
-          <td><%=ppo.unit_price%></td>
-          <td><%=ppo.quantity%></td>
-          <td><%=(ppo.unit_price * ppo.quantity)%></td>
-        </tr>
-        <% end %>
-
-        <tr>
-          <td>Total:</td>
-          <td></td>
-          <td></td>
-          <td><%=@order.total_price%></td>
-        </tr>
-    </table>
-
+<p>
+  <strong>
+  <%= link_to "Products For This Order" , order_products_per_orders_path(params[:id]) %>
+  </strong>
+</p>
+<p>
+  <strong>Total:</strong>
+  <%= @order.total_price %>
+</p>
 <%= link_to 'Edit', edit_order_path(@order) %> |
 <%= link_to 'Back', orders_path %>

@@ -27,31 +27,7 @@ span.tab{
       <tr><th><center><%= link_to "Order #{o.id}", order_path(o.id) %></center></th></tr>
       <tr><th><center>Address <%= o.address %></center></th></tr>
       <tr><th><center>Shipped On <%= o.shipped_on %></center></th></tr>
-      </table>
-      <table>
-      <tr>
-        <th>Item</th>
-        <th>Unit Price</th>
-        <th>Quantity</th>
-        <th>Total</th>
-      </tr>
-
-<%      o.products_per_orders.each do |ppo|
-%>
-        <tr>
-          <td>Product: <%= link_to ppo.product.name, product_path(ppo.product_id)%></td>
-          <td><%=ppo.unit_price%></td>
-          <td><%=ppo.quantity%></td>
-          <td><%=(ppo.unit_price * ppo.quantity)%></td>
-        </tr>
-        <% end %>
-
-        <tr>
-          <td>Total:</td>
-          <td></td>
-          <td></td>
-          <td><%=o.total_price%></td>
-        </tr>
+      <tr><th><center><%= link_to "Products For This Order" , order_products_per_orders_path(o.id) %></center></th></tr>
         <tr> 
           <td><%= link_to 'Show this Order', o %></td>
           <td><%= link_to 'Edit this Order', edit_order_path(o) %></td>
@@ -69,3 +45,4 @@ span.tab{
    </center>
 
 <%= link_to 'New Order', new_order_path %>
+
