@@ -31,6 +31,18 @@ class Order < ApplicationRecord
 		self.update(total_price: totalprice)
 	end
 
+	def self.add_item(item)
+		product = Product.find(item["product_id"])
+        p = ProductsPerOrder.create(order_id: item["order_id"], product_id: product.id, unit_price: product.price, quantity: item["quantity"])
+		p.order.update_price
+	end
+
+	def update_price
+		self.total_price = nil;
+		totalprice = self.total
+		self.update(total_price: totalprice)
+	end
+
 	def self.top_order
 		Order.order("total_price DESC")[0]
 	end

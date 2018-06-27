@@ -1,4 +1,4 @@
-<%= form_with(model: products_per_order, local: true) do |form| %>
+<%= form_with(model: products_per_order, url: order_products_per_orders_path(params[:id]), local: true) do |form| %>
 
 
   <% if products_per_order.errors.any? %>
@@ -12,15 +12,15 @@
       </ul>
     </div>
   <% end %>
-<select class="field">
+<div class="field">
+<%=  hidden_field(:products_per_order, :order_id, :value => params[:id]) %>
+<%= form.label :Select_An_Item %>
+<select class="field" name ="products_per_order[product_id]">
 <%= options_from_collection_for_select(Product.all, :id, :name) %>
 </select>
-  <div class="field">
+
     <%= form.label :quantity %>
     <%= form.number_field :quantity %>
-  </div>
+    <button>Add to Order</button>
 
-  <div class="actions">
-    <%= form.submit %>
-  </div>
 <% end %>

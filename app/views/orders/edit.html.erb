@@ -2,6 +2,36 @@
 <h1>Editing Order</h1>
 
 <%= render 'form', order: @order %>
+<p>
+  <strong>
 
-<%= link_to 'Show', @order %> |
+  </strong>
+</p>
+<table>
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Price At Order</th>
+      <th>Quantity</th>
+      <th>Total</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+    <tbody>
+    <% @order.products_per_orders.each do |products_per_order| %>
+      <tr>
+        <td><%= link_to products_per_order.product.name , products_per_order.product %></td>
+        <td><%= products_per_order.unit_price %></td>
+        <td><%= products_per_order.quantity %></td>
+        <td><%= products_per_order.unit_price * products_per_order.quantity %></td>
+        <td><%= link_to 'Destroy', order_products_per_order_path(params[:id],products_per_order.id), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+</tbody>
+</table>
+<br>
+
+<%= render 'products_per_orders/form', products_per_order: ProductsPerOrder.new(order_id: params[:id]) %>
+<br>
+<%= link_to 'Show Order', @order %> |
 <%= link_to 'Back', orders_path %>

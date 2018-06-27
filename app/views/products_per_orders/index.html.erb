@@ -20,15 +20,15 @@
         <td><%= products_per_order.product_id %></td>
         <td><%= products_per_order.unit_price %></td>
         <td><%= products_per_order.quantity %></td>
-        
+        <td><%= link_to 'Destroy', order_products_per_order_path(params[:order_id],products_per_order.id), method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
+    <!-- <%= link_to "AddItem", new_order_products_per_order_path(params[:order_id]) %> -->
     <%= link_to "Back", order_path(params[:order_id]) %>
   </tbody>
 </table>
-
+<%= render 'form', products_per_order: ProductsPerOrder.new(order_id: params[:order_id]) %>
 <br>
 
 <% # link_to 'New Products Per Order', order_new_products_per_order_path %>
 <!--<td></td>-->
-<% # link_to 'Destroy', products_per_order, method: :delete, data: { confirm: 'Are you sure?' } %>

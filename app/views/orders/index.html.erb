@@ -9,7 +9,7 @@ span.tab{
 <center>
 <table style="width:85%">
   <tr><th>############################################</th></tr>
-  <tr><th><center>Order OverView" </center></th></tr>
+  <tr><th><center>Order OverView </center></th></tr>
   <tr><th>############################################</th></tr>
 </table>
 <%   @orders.each do |o| 
@@ -24,17 +24,39 @@ span.tab{
         <tr><th>############################################</th></tr>
       <% end%>
 
-      <tr><th><center><%= link_to "Order #{o.id}", order_path(o.id) %></center></th></tr>
-      <tr><th><center>Address <%= o.address %></center></th></tr>
-      <tr><th><center>Shipped On <%= o.shipped_on %></center></th></tr>
-      <tr><th><center><%= link_to "Products For This Order" , order_products_per_orders_path(o.id) %></center></th></tr>
-        <tr> 
-          <td><%= link_to 'Show this Order', o %></td>
-          <td><%= link_to 'Edit this Order', edit_order_path(o) %></td>
-          <td><%= link_to 'Destroy this Order', o, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        </tr>
-    </table>
-    <table style="width:85%">
+      <tr>
+        <th>
+          <center>
+          <%= link_to "Order #{o.id}", order_path(o.id) %>
+          </center>
+        </th>
+      </tr>
+      <tr>
+        <th>
+          <center>
+            Address <%= o.address %>
+          </center>
+        </th>
+      </tr>
+      <tr>
+        <th>
+          <center>
+            Shipped On <%= o.shipped_on %>
+          </center>
+        </th>
+      </tr>
+      <tr>
+        <th>
+          <center>
+            Order Total: <%= "#{o.total_price}" %>
+          </center>
+        </th>
+      </tr> 
+      <tr>
+          <td><center><%= link_to 'Show this Order', o %>
+         <%= link_to 'Edit this Order', edit_order_path(o) %>
+        <%= link_to 'Destroy this Order', o, method: :delete, data: { confirm: 'Are you sure?' } %></center></td>
+      </tr>
         <tr><th>############################################</th></tr>
       </table>
           <% if (o.id == @top_order) %>
